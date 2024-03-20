@@ -93,7 +93,7 @@
 #___________________________________________________________________________
 #___________________________________________________________________________
 #___________________________________________________________________________
-
+     
 
 
 # FastAPI, SQLModel, aur doosre zaroori libraries ka import kia gaya hai.
@@ -127,7 +127,7 @@ async def life_span(app: FastAPI):
     yield 
 
 # FastAPI app ki instance banai gayi hai.
-app = FastAPI(lifespan=life_span, title="Hello World API with DB")
+app = FastAPI(lifespan=life_span, title="Hello Hamza API with DB")
 
 # Database session ko retrieve karne ke liye dependency function banaya gaya hai.
 def get_session():
@@ -145,7 +145,7 @@ def get_todos(todo: Todo, session: Annotated[Session, Depends(get_session)]):
     session.add(todo)  # Naya todo item session me add kia gaya hai.
     session.commit()  # Session ko commit kia gaya hai.
     session.refresh(todo)  # Todo item ko refresh kia gaya hai taake sahi ID mil sake.
-    return todo  # Added todo item ko return kia gaya hai.
+    return todo  # Added todo item ko return kia gaya hai. 
 
 # Sabhi todo items ko retrieve karne ka endpoint.
 @app.get("/todo/", response_model=list[Todo])
@@ -153,7 +153,7 @@ def read_todos(session: Annotated[Session, Depends(get_session)]):
     todos = session.exec(select(Todo)).all()  # Sabhi todo items ko database se retrieve kia gaya hai.
     return todos  # Sabhi todo items ko return kia gaya hai.
 
-# Todo item ko ID ke zariye update karne ka endpoint.
+# Todo item ko ID ke zariye update karne ka endpoint.  @ matlab decorator
 @app.put("/todo/{todo_id}", response_model=Todo)
 def update_todo(todo_id: int, todo: Todo, session: Annotated[Session, Depends(get_session)]):
     select_todo = select(Todo).where(Todo.id == todo_id)  # Di gayi ID ke corresponding todo item ko retrieve kia gaya hai.
